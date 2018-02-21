@@ -1,0 +1,12 @@
+{
+    "version": "2.7.1",
+    "compilerOptions": {
+        "target" : "es6",
+        "module": "commonjs",
+        "outDir": "build/",
+        "declaration": true
+    },
+    "files": [
+        "./src/bin/server.ts"
+    ]
+}
