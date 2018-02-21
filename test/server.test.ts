@@ -2,8 +2,6 @@ import * as mocha from 'mocha'
 import * as chai from 'chai'
 const chaiHttp = require('chai-http')
 
-var log = require('why-is-node-running')
-
 chai.use(chaiHttp)
 
 import {app, server} from '../src/bin/server'

@@ -19,7 +19,6 @@ app.use((req, res, next) => {
     next()
 })
 
-
 /**
  * Server routing
  */
