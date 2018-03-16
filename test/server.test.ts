@@ -1,5 +1,6 @@
-import * as mocha from 'mocha'
 import * as chai from 'chai'
+import 'mocha'
+
 const chaiHttp = require('chai-http')
 
 chai.use(chaiHttp)
