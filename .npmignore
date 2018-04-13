@@ -1,5 +1,15 @@
-node_modules/
-.env
 src/
+test/
+docs/
+.vscode/
+node_modules/
+
+.gitignore
+.env
 .DS_Store
+Dockerfile
+tslint.json
 tsconfig.json
+npm-debug.log
+npm-debug.log.*
+bitbucket-pipelines.yml

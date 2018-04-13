@@ -1,5 +1,10 @@
-node_modules/
+#docs/
 build/
+themes/
+.vscode/
+node_modules/
+
 .env
-.DS_Store
+npm-debug.log
+npm-debug.log.*
 package-lock.json

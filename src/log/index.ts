@@ -1,3 +1,6 @@
-import * as bunyan from 'bunyan'
-
-export const log = bunyan.createLogger({ name : 'mss'})
+import bunyan = require('bunyan');
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * bunyan logger engine
+ */
+export const log = bunyan.createLogger({ name : 'microservice-mss'})

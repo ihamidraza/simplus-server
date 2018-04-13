@@ -118,7 +118,7 @@
         "encoding" : true,
         "file-header" : false,
         "interface-name" : false,
-        "linebreak-style" : [true, "LF"]
+        "linebreak-style" : [true, "CRLF"]
     },
     "jsRules": {
         "triple-equals": [

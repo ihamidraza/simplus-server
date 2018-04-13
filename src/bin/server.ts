@@ -1,59 +1,66 @@
-import {config} from 'dotenv'
+import express = require('express')
 
-config()
+//////////////////////////////////////////////////////////////////////////////////////////////////
+// bin Server requirements
+//////////////////////////////////////////////////////////////////////////////////////////////////
+import { microservice } from '../microservice';
+import { json } from 'body-parser';
+import { Server } from 'http';
+import { log } from '../log';
 
-import * as bodyParser from 'body-parser'
-import * as express from 'express'
-import { Express, Request, Response } from 'express'
-import { NextFunction } from 'express-serve-static-core';
-import { Server } from 'http'
-import { log } from '../log'
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * Server initialization and add middlewares
+ * Server initialization and middlewares
  */
-export const app: Express = express()
+export const app: express.Express = express()
+app.locals.title = 'Application title'
+app.locals.email = 'Developer@simplusinnovation.com'
+app.locals.issues = 'https://bitbucket.org/simplusinnovation/microservice/issues'
+app.locals.baseUri = process.env.BASE_URI || '/api/v1/microservice'
 
-app.use(bodyParser.json())
-
-app.use((req, res, next) => {
+app.use(json())
+app.use((_req: express.Request, res: express.Response, next: express.NextFunction): void => {
 	res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
 	next()
 })
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * Server routing
+ * Server routing (Application)
+ */
+app.use(`${app.locals.baseUri}/`, microservice)
+
+ //////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Server routing (Standard)
+ */
+app.get(`${app.locals.baseUri}/ping`, (_req: express.Request , res: express.Response) => {res.sendStatus(200)})
+app.use(`${app.locals.baseUri}/blueprint`, express.static('docs/blueprint/', {extensions : ['html'], index : 'index.html'}))
+app.use(`${app.locals.baseUri}/documentation`, express.static('docs/typedoc/', {extensions : ['html'], index : 'index.html'}))
+app.use(`${app.locals.baseUri}/tests`, express.static('docs/tests/', {extensions : ['html'], index : 'index.html'}))
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Error handling and logging
  */
 
-// CODE HERE
-
-/**
- * Routing after
- */
-app.get('/ping', (req, res, next) => { res.sendStatus(200) })
-app.use('/blueprint', express.static('docs', { extensions: ['html'], index: 'blueprint.html' }))
-
-/**
- * Error handling
- */
-
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+const errorHandler: express.ErrorRequestHandler = (error: Error, _req: express.Request, res: express.Response, _next: express.NextFunction ): void => {
 	log.error(error)
-	res.status(500)
-
-	if (process.env.ENV === 'development')
+	res.send(500)
+	if ( process.env.ENV === 'development' )
 		res.send(error)
 	else
 		res.end()
-})
+}
 
+app.use(errorHandler)
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Launch server
  */
-const SERVER_PORT = 3005
-
-export const server: Server = app.listen(SERVER_PORT, null, (err: Error) => {
+export const SERVER_PORT = parseInt(process.env.PORT || '3002')
+export const server: Server = app.listen( SERVER_PORT, '', (err: Error) => {
 	if (err)
 		log.error(err)
 	else
