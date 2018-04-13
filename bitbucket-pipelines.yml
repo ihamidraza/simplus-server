@@ -39,9 +39,9 @@ pipelines:
           ##################################################################################
           ## test suite
           # run tests on dev mode
-          # - npm run test
+          - npm run test
           # # run test suite documentation
-          - npm run document:test
+          # - npm run document:test
 
           ##################################################################################
           ## documentation
