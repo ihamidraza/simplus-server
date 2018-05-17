@@ -3,10 +3,11 @@ import express = require('express')
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // bin Server requirements
 //////////////////////////////////////////////////////////////////////////////////////////////////
-import { microservice } from '../microservice';
-import { json } from 'body-parser';
-import { Server } from 'http';
-import { log } from '../log';
+import { microservice } from '../microservice'
+import { json } from 'body-parser'
+import { Server } from 'http'
+import { log } from '../log'
+import { Env } from '@simplus/base-ts-utils'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -47,7 +48,8 @@ app.use(`${app.locals.baseUri}/tests`, express.static('docs/tests/', {extensions
 const errorHandler: express.ErrorRequestHandler = (error: Error, _req: express.Request, res: express.Response, _next: express.NextFunction ): void => {
 	log.error(error)
 	res.send(500)
-	if ( process.env.ENV === 'development' )
+
+	if ( Env.isDevelopment() )
 		res.send(error)
 	else
 		res.end()

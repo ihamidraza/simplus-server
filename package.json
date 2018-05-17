@@ -9,9 +9,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "mocha --exit -r ts-node/register -r dotenv/config ./test/**/*.test.ts",
+    "test": "tslint --project ./ -t verbose && set NODE_ENV=test && mocha --exit -r ts-node/register -r dotenv/config ./test/**/*.test.ts",
     "lint": "tslint --project ./ -t verbose",
-    "start": "ts-node-dev -r dotenv/config ./src/bin/server.ts | bunyan -l trace",
+    "start": "set NODE_ENV=development && ts-node-dev -r dotenv/config ./src/bin/server.ts | bunyan -l trace",
     "document": "npm run document:blueprint && npm run document:test && npm run document:typedoc",
     "document:test": "ts-node ./test/index.ts",
     "document:blueprint": "aglio -i ./src/index.apib -o docs/blueprint/index.html",
@@ -28,6 +28,7 @@
   "author": "A",
   "license": "MIT",
   "dependencies": {
+    "@simplus/base-ts-utils": "^1.0.6",
     "@types/bunyan": "1.8.4",
     "@types/express": "4.11.1",
     "body-parser": "1.18.2",
