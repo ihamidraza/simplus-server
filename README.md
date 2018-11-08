@@ -62,19 +62,19 @@ Before deploying, the following prerequisites need to met:
 3. run the container
     run the container using the `--network` flag, linking the container to the `bridge network` you created on server.
     ```
-    sudo docker run --network 'mynetwork' -p <hostport>:<containerport> -d --name microservice1 --restart always ms:mymicroservice
+    sudo docker run --network 'mynetwork' -p <hostport>:<containerport> -d --name microservice --restart always ms:mymicroservice
     ```
 4. test server
-    open http://localhost:port/api/v1/microservice1/ in your browser.
+    open http://localhost:port/api/v1/microservice/ in your browser.
 
 ### Technical users
 
 The microservice has the following standard urls:
 
-* http://localhost:port/api/v1/microservice1/                           - Base url for testing
-* http://localhost:port/api/v1/microservice1/tests                      - Test status of solution
-* http://localhost:port/api/v1/microservice1/blueprint                  - APi Blueprint documentation
-* http://localhost:port/api/v1/microservice1/documentation              - Code type documentation
+* http://localhost:port/api/v1/microservice/                           - Base url for testing
+* http://localhost:port/api/v1/microservice/tests                      - Test status of solution
+* http://localhost:port/api/v1/microservice/blueprint                  - APi Blueprint documentation
+* http://localhost:port/api/v1/microservice/documentation              - Code type documentation
 
 
 ### Scripts
