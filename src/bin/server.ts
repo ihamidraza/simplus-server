@@ -29,7 +29,7 @@ app.use((_req: express.Request, res: express.Response, next: express.NextFunctio
 /**
  * Server routing (Application)
  */
-app.use(`${app.locals.baseUri}/`, microservice)
+app.use(`/`, microservice)
 
  //////////////////////////////////////////////////////////////////////////////////////////////////
 /**

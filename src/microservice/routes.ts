@@ -2,7 +2,10 @@
 // Microservice router requirements
 //////////////////////////////////////////////////////////////////////////////////////////////////
 import { Router,  Request, Response } from 'express';
+import { google } from 'googleapis';
 import { FacadeMicroservice } from './facade';
+import googleConfig from '../googleConfig';
+import { authenticate, validate } from '../auth';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -21,6 +24,25 @@ export const controller  = {
 		.catch((err) => {
 			res.status(500).send(err)
 		})
+	},
+	auth: (req: Request, res: Response) => {
+		 const auth = authenticate();
+		 res.send(auth);
+	},
+	redirect: async (req: Request, res: Response) => {
+		validate(req.query.code)
+		.then(data => {
+			if(data === 401){
+				return res.status(401).send(`You're not authorized !`);
+				
+			}
+			res.cookie('name', data.name);
+			res.cookie('simplus_access_token', data.token);
+			return res.status(200).redirect('http://localhost:8080');
+		})
+		.catch(err => {
+			res.status(500).send(err)
+		})
 	}
 }
 
@@ -29,6 +51,8 @@ export const controller  = {
  * microservice router
  */
 export const microservice: Router = Router()
+microservice.get('/', controller.auth)
+microservice.get('/redirect', controller.redirect)
 microservice.post('/greeting', controller.greetings)
 
 export default microservice
