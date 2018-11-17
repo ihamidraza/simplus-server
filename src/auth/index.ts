@@ -26,7 +26,7 @@ export const validate = async (code: string) => {
 			const me = await plus.people.get({ userId: 'me' })
             const { displayName, emails } = me.data
             const email = emails && emails.length && emails[0].value
-            const validation = /@gmail\.com$/;
+            const validation = /@simplusinnovation\.com$/;
             if(!validation.test(email)){
                 return false
             }

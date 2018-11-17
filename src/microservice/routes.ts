@@ -2,9 +2,8 @@
 // Microservice router requirements
 //////////////////////////////////////////////////////////////////////////////////////////////////
 import { Router,  Request, Response } from 'express';
-import { google } from 'googleapis';
+
 import { FacadeMicroservice } from './facade';
-import googleConfig from '../googleConfig';
 import { authenticate, validate } from '../auth';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +31,7 @@ export const controller  = {
 	redirect: async (req: Request, res: Response) => {
 		validate(req.query.code)
 		.then(data => {
-			if(data === 401){
+			if(!data){
 				return res.status(401).send(`You're not authorized !`);
 				
 			}
