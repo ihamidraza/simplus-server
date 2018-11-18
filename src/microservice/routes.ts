@@ -33,7 +33,6 @@ export const controller  = {
 		.then(data => {
 			if(!data){
 				return res.status(401).send(`You're not authorized !`);
-				
 			}
 			res.cookie('name', data.name);
 			res.cookie('simplus_access_token', data.token);

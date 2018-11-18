@@ -8,6 +8,7 @@ import { json } from 'body-parser'
 import { Server } from 'http'
 import { log } from '../log'
 import { Env } from '@simplus/base-ts-utils'
+import { connect } from 'mongoose';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -18,6 +19,8 @@ app.locals.title = 'Application title'
 app.locals.email = 'Developer@simplusinnovation.com'
 app.locals.issues = 'https://bitbucket.org/simplusinnovation/microservice/issues'
 app.locals.baseUri = process.env.BASE_URI || '/api/v1/microservice'
+
+connect('mongodb://localhost:27017/simplusdb');
 
 app.use(json())
 app.use((_req: express.Request, res: express.Response, next: express.NextFunction): void => {

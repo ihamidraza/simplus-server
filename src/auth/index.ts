@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 
 import config from './config';
+import User from '../models/user';
 
 
 export const authenticate = () => {
@@ -26,15 +27,16 @@ export const validate = async (code: string) => {
 			const me = await plus.people.get({ userId: 'me' })
             const { displayName, emails } = me.data
             const email = emails && emails.length && emails[0].value
-            const validation = /@simplusinnovation\.com$/;
+            const validation = /@gmail\.com$/;
             if(!validation.test(email)){
                 return false
             }
-
-		  return {
+            const user = await User.create({
               name: displayName,
+               email,
               token: tokens.access_token
-          }
+            })
+            return user;
 }
   const createConnection = () => {
 	return new google.auth.OAuth2(
